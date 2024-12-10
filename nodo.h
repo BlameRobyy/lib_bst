@@ -15,8 +15,13 @@ class Node {
         Node* insertR(int k);
         Node* insertI(int k);
         void inOrder();
+        void preOrder();
+        void postOrder();
         bool searchI (int k);
         bool searchR (int k);
+        Node* deleteNode(int k);
+        bool isBst();
+
 
     friend ostream& operator <<(ostream&os, Node& c);
 

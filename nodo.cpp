@@ -47,15 +47,15 @@ bool Node::searchI (int k){
 }
 
 bool Node::searchR(int k) {
-    if (this == nullptr) {   
-        return false;
-    }
     if (this->data == k) {   
-        return true;
+        return true;   
     }
+
     if (k < this->data) {   
+         
         return this->lchild != nullptr && this->lchild->searchR(k);
     } else {   
+         
         return this->rchild != nullptr && this->rchild->searchR(k);
     }
 }
@@ -112,3 +112,67 @@ istream& operator>>(istream&is, Node& c){
 }
 
 
+void Node::preOrder() {
+     cout << data << " ";
+
+     if (lchild != nullptr) {
+        lchild->preOrder();
+    }
+
+     if (rchild != nullptr) {
+        rchild->preOrder();
+    }
+}
+
+void Node::postOrder() {
+     if (lchild != nullptr) {
+        lchild->postOrder();
+    }
+
+     if (rchild != nullptr) {
+        rchild->postOrder();
+    }
+
+     cout << data << " ";
+}
+
+
+bool Node::isBst()
+{
+
+    if(this->lchild != nullptr && this->lchild->data > this->data) {
+        cout << "This is not a BST" << endl;
+        return false;
+    }
+    if(this->rchild != nullptr && this->rchild->data < this->data) {
+        cout << "This is not a BST" << endl;
+        return false;
+    }
+    return this -> lchild -> isBst() && this -> rchild -> isBst();
+
+}
+
+Node* Node::deleteNode(int k) {
+    if (k == this->data) {
+        if (this->lchild == NULL && this->rchild == NULL) {
+            delete this;
+            return nullptr;
+        } else if (this->lchild == NULL) {
+            this->data = this->rchild->data;
+            this->rchild = nullptr;
+            delete this->rchild;
+            return this;
+        } else if (this->rchild == NULL) {
+            this->data = this->lchild->data;
+            this->lchild = nullptr;
+            delete this->lchild;
+            return this;
+        }
+    }
+    if (k < this->data) {
+        this->lchild = this->lchild->deleteNode(k);
+    } else {
+        this->rchild = this->rchild->deleteNode(k);
+    }
+    return this;
+}
